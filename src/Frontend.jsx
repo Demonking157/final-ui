@@ -1,6 +1,6 @@
 import './normal.css';
 import './frontend.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function Frontend() {
 
@@ -8,10 +8,22 @@ function Frontend() {
   const [chatLog , setChatLog] = useState([{
     user: "ai",
     message: "How i can help you today?"
-  },{
-    user: "me",
-    message: "Hlets have fun"
   }]);
+
+  // useEffect(()=>{
+  //   fetchData()
+  // },[]);
+
+  // const fetchData = async ()=>{
+  //   try{
+  //     const response= await fetch('http://localhost:5000/api')
+  //     const jsonData =await response.json();
+  //     setChatLog(jsonData)
+  //   }
+  //   catch(error){
+  //     console.log("ERROR", error)
+  //   }
+  // }
 
   function clearChat(){
     setChatLog([]);
@@ -23,9 +35,9 @@ function Frontend() {
     setInput("");
     setChatLog(chatLogNew)
 
-    //fetch response rom api
+    //fetch response from api
     const messages= chatLogNew.map((message)=>message.message).join("\n")
-    const response = await fetch("http://localhost:3080/",{
+    const response = await fetch("http://localhost:5000/api",{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -33,9 +45,11 @@ function Frontend() {
       body: JSON.stringify({
         message: messages
       })
+      // .then(response=>response.json())
+      // .catch(error=>console.log(error))
     });
       const data = await response.json();
-      setChatLog([...chatLogNew,{user: "ai",message: `${data.message}`}])
+      setChatLog([...chatLogNew,{user: "ai",message: `${input.message}`}])
   }
 
   return (
