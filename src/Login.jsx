@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import "./login.css";
-import { useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigation();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     // Perform login logic here
